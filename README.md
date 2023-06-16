@@ -1,2 +1,2 @@
-# Bug-Traker
-Bug Traker
+# Bug-Tracker
+Bug Tracker
