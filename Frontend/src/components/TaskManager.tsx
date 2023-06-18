@@ -7,7 +7,6 @@ interface TaskManagerProps {
   addITask: (name: string, description: string) => void;
 }
 
-
 const ITaskItem: React.FC<{ ITask: ITask; moveCallback: (ITask: ITask) => void }> = ({ ITask, moveCallback }) => {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', border: '1px solid white' }}>
@@ -19,6 +18,7 @@ const ITaskItem: React.FC<{ ITask: ITask; moveCallback: (ITask: ITask) => void }
     </div>
   );
 };
+
 
 const App2 = ({ ITasks, addITask }: TaskManagerProps) => {
   const [openITasks, setOpenITasks] = useState<ITask[]>(ITasks);
