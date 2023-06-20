@@ -1,6 +1,5 @@
 export default interface Task {
-    id: number;
-    name: string;
-    description: string;
+    taskName: string;
+    discription: string;
     status: 'open' | 'in progress' | 'closed';
   }

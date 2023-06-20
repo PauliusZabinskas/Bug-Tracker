@@ -1,58 +1,60 @@
-import { useState } from 'react';
-import ITask from './interface/ITask'
 
+import { useState, useEffect } from 'react';
 
-interface TaskManagerProps {
-  ITasks: ITask[];
-  addITask: (name: string, description: string) => void;
+interface ITask {
+  taskName: string;
+  discription: string;
 }
 
-const ITaskItem: React.FC<{ ITask: ITask; moveCallback: (ITask: ITask) => void }> = ({ ITask, moveCallback }) => {
-  return (
-    <div style={{ display: 'flex', flexDirection: 'column', border: '1px solid white' }}>
-      <h4><b style={{color:"orange"}}>{"Task Name: "}</b>{ITask.name}</h4>
-      <p> <b style={{color: 'orange'}}>{"Description: "}</b> { ITask.description}</p>
-      <button style={{ width: '50%', alignSelf: 'center' }} onClick={() => moveCallback(ITask)}>
-        Move
-      </button>
-    </div>
-  );
-};
-
-
-const App2 = ({ ITasks, addITask }: TaskManagerProps) => {
-  const [openITasks, setOpenITasks] = useState<ITask[]>(ITasks);
-  const [inProgressITasks, setInProgressITasks] = useState<ITask[]>([]);
-  const [closedITasks, setClosedITasks] = useState<ITask[]>([]);
+const TaskManager: React.FC = () => {
   const [ITaskName, setITaskName] = useState('');
   const [ITaskDescription, setITaskDescription] = useState('');
+  const [tasks, setTasks] = useState<ITask[]>([]);
 
-  const handleITaskMoved = (ITask: ITask) => {
-    if (ITask.status === 'open') {
-      setOpenITasks(openITasks.filter((current) => current !== ITask));
-      setInProgressITasks([...inProgressITasks, { ...ITask, status: 'in progress' }]);
-    } else if (ITask.status === 'in progress') {
-      setInProgressITasks(inProgressITasks.filter((current) => current !== ITask));
-      setClosedITasks([...closedITasks, { ...ITask, status: 'closed' }]);
-    } else {
-      setClosedITasks(closedITasks.filter((current) => current !== ITask));
-      setOpenITasks([...openITasks, { ...ITask, status: 'open' }]);
+  const fetchTasks = async () => {
+    try {
+      const response = await fetch('http://localhost:5047/tasks');
+      if (response.ok) {
+        const tasks = await response.json();
+        setTasks(tasks);
+      } else {
+        console.error('Failed to fetch tasks');
+      }
+    } catch (error) {
+      console.error('Failed to fetch tasks:', error);
     }
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  useEffect(() => {
+    fetchTasks();
+  }, []);
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (ITaskName.trim() !== '' && ITaskDescription.trim() !== '') {
-      const newITask: ITask = {
-        id: Math.floor(Math.random() * 100000),
-        name: ITaskName,
-        description: ITaskDescription,
-        status: 'open',
+      const newITask = {
+        taskName: ITaskName,
+        discription: ITaskDescription,
       };
-      addITask(newITask.name, newITask.description);
-      setOpenITasks([...openITasks, newITask]);
-      setITaskName('');
-      setITaskDescription('');
+      try {
+        const response = await fetch('http://localhost:5047/tasks', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(newITask),
+        });
+
+        if (response.ok) {
+          setITaskName('');
+          setITaskDescription('');
+          fetchTasks(); // Fetch tasks again after a task is added
+        } else {
+          console.error('Failed to add task');
+        }
+      } catch (error) {
+        console.error('Failed to add task:', error);
+      }
     }
   };
 
@@ -64,43 +66,32 @@ const App2 = ({ ITasks, addITask }: TaskManagerProps) => {
           value={ITaskName}
           onChange={(e) => setITaskName(e.target.value)}
           placeholder="Task Name"
+          required
         />
         <input
           type="text"
           value={ITaskDescription}
           onChange={(e) => setITaskDescription(e.target.value)}
-          placeholder="ITask Description"
+          placeholder="Task Description"
+          required
         />
         <button type="submit">Add Task</button>
       </form>
-
-      <div style={{ display: 'flex', flexDirection: 'row', width: '100vw' }}>
-        {/* open ITasks column */}
-        <div style={{ display: 'flex', flex: 1, flexDirection: 'column', width: '100%' }}>
-          <h2>Open Tasks</h2>
-          {openITasks.map((ITask) => (
-            <ITaskItem key={ITask.id} ITask={ITask} moveCallback={handleITaskMoved} />
-          ))}
-        </div>
-
-        {/* in progress ITasks column */}
-        <div style={{ display: 'flex', flex: 1, flexDirection: 'column', width: '100%' }}>
-          <h2>In Progress</h2>
-          {inProgressITasks.map((ITask) => (
-            <ITaskItem key={ITask.id} ITask={ITask} moveCallback={handleITaskMoved} />
-          ))}
-        </div>
-
-        {/* closed ITasks column */}
-        <div style={{ display: 'flex', flex: 1, flexDirection: 'column', width: '100%' }}>
-          <h2>Closed</h2>
-          {closedITasks.map((ITask) => (
-            <ITaskItem key={ITask.id} ITask={ITask} moveCallback={handleITaskMoved} />
-          ))}
-        </div>
+      <div className="">
+        <ul  className="" >
+            {tasks.map((task, index) => (
+              <li key={index} className=''>
+                <p ><p className=''>Task Name:</p>{task.taskName}</p>
+                <p>{task.discription}</p>
+              </li>
+            ))}
+        </ul>
       </div>
+        
+      
+      
     </>
   );
 };
 
-export default App2;
+export default TaskManager;
