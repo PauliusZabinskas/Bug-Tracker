@@ -60,13 +60,14 @@ const TaskManager: React.FC = () => {
 
   return (
     <>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} className='p-2'>
         <input
           type="text"
           value={ITaskName}
           onChange={(e) => setITaskName(e.target.value)}
           placeholder="Task Name"
           required
+          className='border-2 border-rose-500 p-1 ...'
         />
         <input
           type="text"
@@ -74,15 +75,18 @@ const TaskManager: React.FC = () => {
           onChange={(e) => setITaskDescription(e.target.value)}
           placeholder="Task Description"
           required
+          className='border-2 border-rose-500 p-1 ...'
+
         />
-        <button type="submit">Add Task</button>
+        <button type="submit" className='p-1 rounded md:rounded-lg border-indigo-500/100 hover:text-lg font-bold shadow-xl ...'>Add Task</button>
       </form>
+
       <div className="">
-        <ul  className="" >
+        <ul  className="flex flex-wrap" >
             {tasks.map((task, index) => (
-              <li key={index} className=''>
-                <p ><p className=''>Task Name:</p>{task.taskName}</p>
-                <p>{task.discription}</p>
+              <li key={index} className='p-8  hover:text-lg hover:shadow-2xl ...'>
+                <h3 className='hover:shadow-xl'> <p className='font-bold'>Name:</p> {task.taskName}</h3>
+                <h3 className='hover:shadow-xl'> <p className='font-bold'>Discription:</p> {task.discription}</h3>
               </li>
             ))}
         </ul>
