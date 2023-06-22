@@ -7,7 +7,7 @@ List<TodoTask> todoTasks = new()
 {
     new TodoTask ()
     {
-        Id = 1,
+        Id = Guid.NewGuid(),
         TaskName = "First Task Name",
         Discription = "First Task Discription",
 
@@ -15,7 +15,7 @@ List<TodoTask> todoTasks = new()
     },
     new TodoTask ()
     {
-        Id = 2,
+        Id = Guid.NewGuid(),
         TaskName = "Second Task Name",
         Discription = "Second Task Discription",
 
@@ -24,7 +24,7 @@ List<TodoTask> todoTasks = new()
     },
     new TodoTask ()
     {
-        Id = 3,
+        Id = Guid.NewGuid(),
         TaskName = "Tird Task Name",
         Discription = "Tird Task Discription",
 
@@ -45,11 +45,13 @@ builder.Services.AddCors(options =>
 });
 var app = builder.Build();
 
+var group = app.MapGroup("/tasks");
+
 app.UseCors("AllowAllOrigins");
 
-app.MapGet("/tasks", () => todoTasks);
+group.MapGet("/", () => todoTasks);
 
-app.MapGet("/tasks/{id}", (int id) =>
+group.MapGet("/{id}", (Guid id) =>
 {
     TodoTask? task = todoTasks.Find(task => task.Id == id);
 
@@ -61,15 +63,15 @@ app.MapGet("/tasks/{id}", (int id) =>
 })
 .WithName(GetTaskEndpointName);
 
-app.MapPost("/tasks", (TodoTask task) =>
+group.MapPost("/", (TodoTask task) =>
 {
-    task.Id = todoTasks.Max(task => task.Id) + 1;
+    task.Id = Guid.NewGuid();
     todoTasks.Add(task);
 
     return Results.CreatedAtRoute(GetTaskEndpointName, new { id = task.Id }, task);
 });
 
-app.MapPut("/tasks/{id}", (int id, TodoTask updatedTask) =>
+group.MapPut("/{id}", (Guid  id, TodoTask updatedTask) =>
 {
     TodoTask? existingTask = todoTasks.Find(task => task.Id == id);
 
@@ -84,7 +86,7 @@ app.MapPut("/tasks/{id}", (int id, TodoTask updatedTask) =>
     return Results.NoContent();
 });
 
-app.MapDelete("/tasks/{id}", (int id) =>
+group.MapDelete("/{id}", (Guid id) =>
 {
     TodoTask? task = todoTasks.Find(task => task.Id == id);
 

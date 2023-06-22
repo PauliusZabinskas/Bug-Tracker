@@ -122,27 +122,26 @@ const TaskManager = () => {
 
   return (
     <>
-      {(
-        <form onSubmit={handleSubmit} className='p-2'>
-          <input
-            type="text"
-            value={ITaskName}
-            onChange={(e) => setITaskName(e.target.value)}
-            placeholder="Task Name"
-            required
-            className='border-2 border-rose-500 p-1 p-2 rounded-full mx-2 ...'
-          />
-          <input
-            type="text"
-            value={ITaskDescription}
-            onChange={(e) => setITaskDescription(e.target.value)}
-            placeholder="Task Description"
-            required
-            className='border-2 border-rose-500 p-1 p-2 rounded-full mx-2 ...'
-          />
-          <button type="submit" className='p-1 rounded md:rounded-lg border-indigo-500/100 hover:text-lg font-bold shadow-xl border border-yellow-500...'>Add Task</button>
-        </form>
-      )}
+      <form onSubmit={handleSubmit} className='p-2'>
+        <input
+          type="text"
+          value={ITaskName}
+          onChange={(e) => setITaskName(e.target.value)}
+          placeholder="Task Name"
+          required
+          className='border-2 border-rose-500 p-1 p-2 rounded-full mx-2 ...'
+        />
+        <input
+          type="text"
+          value={ITaskDescription}
+          onChange={(e) => setITaskDescription(e.target.value)}
+          placeholder="Task Description"
+          required
+          className='border-2 border-rose-500 p-1 p-2 rounded-full mx-2 ...'
+        />
+        <button type="submit" 
+          className='p-1 rounded md:rounded-lg border-indigo-500/100 hover:text-lg font-bold shadow-xl border border-yellow-500...'>Add Task</button>
+      </form>
 
       <div className="">
         <ul className="flex flex-wrap" >
@@ -162,6 +161,7 @@ const TaskManager = () => {
           ))}
         </ul>
       </div>
+
       {isModalOpen && editingTask && (
         <div className="modal">
           <div className="modal-content bg-blue-500 rounded-full">
