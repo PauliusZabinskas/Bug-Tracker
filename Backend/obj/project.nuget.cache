@@ -1,8 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "rAQlo+r5TL3MJJdlSrcXHB3Jqq/jWAV9vKLDuNwJR576Eg7JM4sQH1Hbn9Hu0WZk81F8RUjh73pfv4WipFve2Q==",
+  "dgSpecHash": "q17F2x0ByzBTx/ETEq0/tC+pcRAqxiddm01tAaeZoZpWwEn6qQ9Nzw6//J32rhs43LOn3zZKuo7gAP65uCJ8IA==",
   "success": true,
   "projectFilePath": "C:\\CV Projects\\Issue - Bug Tracker\\Github software projects\\Bug Tracker Github upload\\Bug-Traker\\Backend\\Backend.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "C:\\Users\\zabin\\.nuget\\packages\\microsoft.openapi\\1.4.3\\microsoft.openapi.1.4.3.nupkg.sha512",
+    "C:\\Users\\zabin\\.nuget\\packages\\minimalapis.extensions\\0.10.1\\minimalapis.extensions.0.10.1.nupkg.sha512",
+    "C:\\Users\\zabin\\.nuget\\packages\\minivalidation\\0.7.2\\minivalidation.0.7.2.nupkg.sha512"
+  ],
   "logs": []
 }

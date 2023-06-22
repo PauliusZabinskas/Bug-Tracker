@@ -45,7 +45,8 @@ builder.Services.AddCors(options =>
 });
 var app = builder.Build();
 
-var group = app.MapGroup("/tasks");
+var group = app.MapGroup("/tasks")
+.WithParameterValidation();
 
 app.UseCors("AllowAllOrigins");
 

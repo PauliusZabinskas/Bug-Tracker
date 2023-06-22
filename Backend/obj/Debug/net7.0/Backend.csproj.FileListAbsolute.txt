@@ -24,3 +24,8 @@ C:\CV Projects\Issue - Bug Tracker\Github software projects\Bug Tracker Github u
 C:\CV Projects\Issue - Bug Tracker\Github software projects\Bug Tracker Github upload\Bug-Traker\Backend\obj\Debug\net7.0\Backend.pdb
 C:\CV Projects\Issue - Bug Tracker\Github software projects\Bug Tracker Github upload\Bug-Traker\Backend\obj\Debug\net7.0\Backend.genruntimeconfig.cache
 C:\CV Projects\Issue - Bug Tracker\Github software projects\Bug Tracker Github upload\Bug-Traker\Backend\obj\Debug\net7.0\ref\Backend.dll
+C:\CV Projects\Issue - Bug Tracker\Github software projects\Bug Tracker Github upload\Bug-Traker\Backend\bin\Debug\net7.0\Microsoft.OpenApi.dll
+C:\CV Projects\Issue - Bug Tracker\Github software projects\Bug Tracker Github upload\Bug-Traker\Backend\bin\Debug\net7.0\MinimalApis.Extensions.dll
+C:\CV Projects\Issue - Bug Tracker\Github software projects\Bug Tracker Github upload\Bug-Traker\Backend\bin\Debug\net7.0\MiniValidation.dll
+C:\CV Projects\Issue - Bug Tracker\Github software projects\Bug Tracker Github upload\Bug-Traker\Backend\obj\Debug\net7.0\Backend.MvcApplicationPartsAssemblyInfo.cs
+C:\CV Projects\Issue - Bug Tracker\Github software projects\Bug Tracker Github upload\Bug-Traker\Backend\obj\Debug\net7.0\Backend.csproj.CopyComplete
