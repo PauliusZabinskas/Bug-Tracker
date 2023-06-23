@@ -1,69 +1,42 @@
 using Backend.Entities;
+using Backend.Repositories;
 
 namespace Backend.Endpoints;
 
 public static class TaskEndpoinst
 {
     const string GetTaskEndpointName = "GetTask";
-    static List<TodoTask> todoTasks = new()
-    {
-        new TodoTask ()
-        {
-            Id = Guid.NewGuid(),
-            TaskName = "First Task Name",
-            Discription = "First Task Discription",
-
-
-        },
-        new TodoTask ()
-        {
-            Id = Guid.NewGuid(),
-            TaskName = "Second Task Name",
-            Discription = "Second Task Discription",
-
-
-
-        },
-        new TodoTask ()
-        {
-            Id = Guid.NewGuid(),
-            TaskName = "Tird Task Name",
-            Discription = "Tird Task Discription",
-
-        }
-    };
+    
     public static RouteGroupBuilder MapTasksEndpoints(this IEndpointRouteBuilder routes)
     {
+
+        InMemTasksRepo repository = new();
+
         var group = routes.MapGroup("/tasks")
         .WithParameterValidation();
 
 
 
-        group.MapGet("/", () => todoTasks);
+        group.MapGet("/", () => repository.GetAll());
 
         group.MapGet("/{id}", (Guid id) =>
         {
-            TodoTask? task = todoTasks.Find(task => task.Id == id);
+            TodoTask? task = repository.Get(id);
+            return task is not null ? Results.Ok(task) : Results.NotFound();
 
-            if (task is null)
-            {
-                return Results.NotFound();
-            }
-            return Results.Ok(task);
         })
         .WithName(GetTaskEndpointName);
 
         group.MapPost("/", (TodoTask task) =>
         {
-            task.Id = Guid.NewGuid();
-            todoTasks.Add(task);
+            repository.Create(task);
 
             return Results.CreatedAtRoute(GetTaskEndpointName, new { id = task.Id }, task);
         });
 
         group.MapPut("/{id}", (Guid  id, TodoTask updatedTask) =>
         {
-            TodoTask? existingTask = todoTasks.Find(task => task.Id == id);
+            TodoTask? existingTask = repository.Get(id);
 
             if (existingTask is null)
             {
@@ -73,16 +46,18 @@ public static class TaskEndpoinst
             existingTask.TaskName = updatedTask.TaskName;
             existingTask.Discription = updatedTask.Discription;
 
+            repository.Update(existingTask);
+
             return Results.NoContent();
         });
 
         group.MapDelete("/{id}", (Guid id) =>
         {
-            TodoTask? task = todoTasks.Find(task => task.Id == id);
+            TodoTask? task = repository.Get(id);
 
             if (task is not null)
             {
-                todoTasks.Remove(task);
+                repository.Delete(id);
             }
 
             return Results.NoContent();
