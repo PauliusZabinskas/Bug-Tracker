@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import './style.css'
+import TaskList from './TaskList';
 
 interface ITask {
   id: string;
@@ -174,32 +175,7 @@ const TaskManager = () => {
           className='p-1 rounded md:rounded-lg border-indigo-500/100 hover:text-lg font-bold shadow-xl border border-yellow-500'>Add Task</button>
       </form>
 
-      <div className="">
-        <ul className="flex flex-wrap" >
-          {tasks.map((task, index) => (
-            <li key={index} className='p-8  hover:text-lg hover:shadow-2xl'>
-              <h3><p className='font-bold'>Name:</p> {task.taskName}</h3>
-              <h3><p className='font-bold'>Discription:</p> {task.discription}</h3>
-              <div className='flex flex-wrap mt-2'>
-                <li className='p-2 hover:font-bold hover:text-lg border border-blue-500 border border-yellow-500 rounded-full mx-2'>
-                  <button onClick={() => handleUpdate(task)}>Edit</button>
-                </li>
-                <li className='p-2 hover:font-bold hover:text-lg border border-yellow-500 rounded-full'>
-                  <button onClick={() => handleDelete(task.id)}>Delete</button>
-                </li>
-                <li className='p-2 hover:font-bold hover:text-lg border border-yellow-500 rounded-full'>
-                  <select className='bg-transparent' value={task.currentState} onChange={(e) =>
-                    handleStateChange(task.id, Number(e.target.value) as ITask['currentState'])}>
-                    <option value="0">Open</option>
-                    <option value="1">In Process</option>
-                    <option value="2">Closed</option>
-                  </select>
-                </li>
-              </div>
-            </li>
-          ))}
-        </ul>
-      </div>
+      
 
       {isModalOpen && editingTask && (
         <div className="modal">
@@ -225,10 +201,21 @@ const TaskManager = () => {
           </div>
         </div>
       )}
-      {/* Add a new section to display only Open Tasks */}
-      {/* Add a new section to display only inProgress Tasks */}
-      {/* Add a new section to display only Close Tasks */}
+      
+      <div className="">
+        <h1 className="title">Task State: Open</h1>
+        <TaskList tasks={tasks.filter(task => task.currentState === 0)} handleUpdate={handleUpdate} handleDelete={handleDelete} handleStateChange={handleStateChange} />
+      </div>
 
+      <div className="">
+        <h1 className="title">Task State: In-Progress</h1>
+        <TaskList tasks={tasks.filter(task => task.currentState === 1)} handleUpdate={handleUpdate} handleDelete={handleDelete} handleStateChange={handleStateChange} />
+      </div>
+
+      <div className="">
+        <h1 className="title">Task State: Closed</h1>
+        <TaskList tasks={tasks.filter(task => task.currentState === 2)} handleUpdate={handleUpdate} handleDelete={handleDelete} handleStateChange={handleStateChange} />
+      </div>
 
     </>
   );

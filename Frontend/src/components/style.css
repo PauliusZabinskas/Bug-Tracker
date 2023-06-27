@@ -30,4 +30,13 @@
     text-decoration: none;
     cursor: pointer;
   }
+
+  .title {
+    font-size: 2.5em;
+    font-weight: bold;
+    /* text-align: center; */
+    color: #4a4a4a;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
   
