@@ -2,9 +2,10 @@ import { useState, useEffect } from 'react';
 import './style.css'
 
 interface ITask {
-  id: number;
+  id: string;
   taskName: string;
   discription: string;
+  currentState: 0 | 1 | 2;
 }
 
 const TaskManager = () => {
@@ -13,6 +14,7 @@ const TaskManager = () => {
   const [tasks, setTasks] = useState<ITask[]>([]);
   const [editingTask, setEditingTask] = useState<ITask | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+
 
   const fetchTasks = async () => {
     try {
@@ -79,7 +81,9 @@ const TaskManager = () => {
         ...editingTask,
         taskName: ITaskName,
         discription: ITaskDescription,
+        currentState: editingTask.currentState,
       };
+      
       try {
         const response = await fetch(`http://localhost:5047/tasks/${editingTask.id}`, {
           method: 'PUT',
@@ -104,7 +108,7 @@ const TaskManager = () => {
     setIsModalOpen(false);
   };
 
-  const handleDelete = async (id: number) => {
+  const handleDelete = async (id: string) => {
     try {
       const response = await fetch(`http://localhost:5047/tasks/${id}`, {
         method: 'DELETE',
@@ -120,6 +124,33 @@ const TaskManager = () => {
     }
   };
 
+  const handleStateChange = async (id: string, newState: ITask['currentState']) => {
+    const taskToUpdate = tasks.find(task => task.id === id);
+    if (!taskToUpdate) {
+      console.error(`Failed to find task with ID ${id}`);
+      return;
+    }
+    const updatedTask = { ...taskToUpdate, currentState: Number(newState) };
+    
+    try {
+      const response = await fetch(`http://localhost:5047/tasks/${id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(updatedTask),
+      });
+
+      if (response.ok) {
+        fetchTasks(); // Fetch tasks again after a task is updated
+      } else {
+        throw new Error(`HTTP error! status: ${response.status}`); // Added error handling
+      }
+    } catch (error) {
+      console.error('Failed to update task state:', error);
+    }
+  };
+
   return (
     <>
       <form onSubmit={handleSubmit} className='p-2'>
@@ -129,7 +160,7 @@ const TaskManager = () => {
           onChange={(e) => setITaskName(e.target.value)}
           placeholder="Task Name"
           required
-          className='border-2 border-rose-500 p-1 p-2 rounded-full mx-2 ...'
+          className='border-2 border-rose-500 p-1 p-2 rounded-full mx-2'
         />
         <input
           type="text"
@@ -137,24 +168,32 @@ const TaskManager = () => {
           onChange={(e) => setITaskDescription(e.target.value)}
           placeholder="Task Description"
           required
-          className='border-2 border-rose-500 p-1 p-2 rounded-full mx-2 ...'
+          className='border-2 border-rose-500 p-1 p-2 rounded-full mx-2'
         />
-        <button type="submit" 
-          className='p-1 rounded md:rounded-lg border-indigo-500/100 hover:text-lg font-bold shadow-xl border border-yellow-500...'>Add Task</button>
+        <button type="submit"
+          className='p-1 rounded md:rounded-lg border-indigo-500/100 hover:text-lg font-bold shadow-xl border border-yellow-500'>Add Task</button>
       </form>
 
       <div className="">
         <ul className="flex flex-wrap" >
           {tasks.map((task, index) => (
-            <li key={index} className='p-8  hover:text-lg hover:shadow-2xl ...'>
-              <h3 > <p className='font-bold'>Name:</p> {task.taskName}</h3>
-              <h3 > <p className='font-bold'>Discription:</p> {task.discription}</h3>
+            <li key={index} className='p-8  hover:text-lg hover:shadow-2xl'>
+              <h3><p className='font-bold'>Name:</p> {task.taskName}</h3>
+              <h3><p className='font-bold'>Discription:</p> {task.discription}</h3>
               <div className='flex flex-wrap mt-2'>
                 <li className='p-2 hover:font-bold hover:text-lg border border-blue-500 border border-yellow-500 rounded-full mx-2'>
                   <button onClick={() => handleUpdate(task)}>Edit</button>
                 </li>
                 <li className='p-2 hover:font-bold hover:text-lg border border-yellow-500 rounded-full'>
                   <button onClick={() => handleDelete(task.id)}>Delete</button>
+                </li>
+                <li className='p-2 hover:font-bold hover:text-lg border border-yellow-500 rounded-full'>
+                  <select className='bg-transparent' value={task.currentState} onChange={(e) =>
+                    handleStateChange(task.id, Number(e.target.value) as ITask['currentState'])}>
+                    <option value="0">Open</option>
+                    <option value="1">In Process</option>
+                    <option value="2">Closed</option>
+                  </select>
                 </li>
               </div>
             </li>
@@ -165,7 +204,7 @@ const TaskManager = () => {
       {isModalOpen && editingTask && (
         <div className="modal">
           <div className="modal-content bg-blue-500 rounded-full">
-            <span className="close-button " onClick={handleModalClose}>&times;</span>
+            <span className="close-button" onClick={handleModalClose}>&times;</span>
             <form onSubmit={handleUpdateSubmit}>
               <input
                 type="text"
@@ -186,8 +225,14 @@ const TaskManager = () => {
           </div>
         </div>
       )}
+      {/* Add a new section to display only Open Tasks */}
+      {/* Add a new section to display only inProgress Tasks */}
+      {/* Add a new section to display only Close Tasks */}
+
+
     </>
   );
 };
+
 
 export default TaskManager;

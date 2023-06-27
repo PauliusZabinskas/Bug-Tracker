@@ -9,17 +9,12 @@ public static class TaskEndpoinst
     
     public static RouteGroupBuilder MapTasksEndpoints(this IEndpointRouteBuilder routes)
     {
-
-        InMemTasksRepo repository = new();
-
         var group = routes.MapGroup("/tasks")
         .WithParameterValidation();
 
+        group.MapGet("/", (ITasksRepo repository) => repository.GetAll());
 
-
-        group.MapGet("/", () => repository.GetAll());
-
-        group.MapGet("/{id}", (Guid id) =>
+        group.MapGet("/{id}", (ITasksRepo repository, Guid id) =>
         {
             TodoTask? task = repository.Get(id);
             return task is not null ? Results.Ok(task) : Results.NotFound();
@@ -27,14 +22,14 @@ public static class TaskEndpoinst
         })
         .WithName(GetTaskEndpointName);
 
-        group.MapPost("/", (TodoTask task) =>
+        group.MapPost("/", (ITasksRepo repository, TodoTask task) =>
         {
             repository.Create(task);
 
             return Results.CreatedAtRoute(GetTaskEndpointName, new { id = task.Id }, task);
         });
 
-        group.MapPut("/{id}", (Guid  id, TodoTask updatedTask) =>
+        group.MapPut("/{id}", (ITasksRepo repository, Guid  id, TodoTask updatedTask) =>
         {
             TodoTask? existingTask = repository.Get(id);
 
@@ -45,13 +40,14 @@ public static class TaskEndpoinst
 
             existingTask.TaskName = updatedTask.TaskName;
             existingTask.Discription = updatedTask.Discription;
+            existingTask.CurrentState = updatedTask.CurrentState;
 
             repository.Update(existingTask);
 
             return Results.NoContent();
         });
 
-        group.MapDelete("/{id}", (Guid id) =>
+        group.MapDelete("/{id}", (ITasksRepo repository, Guid id) =>
         {
             TodoTask? task = repository.Get(id);
 

@@ -2,7 +2,7 @@ using Backend.Entities;
 
 namespace Backend.Repositories;
 
-public class InMemTasksRepo
+public class InMemTasksRepo : ITasksRepo
 {
     private readonly List<TodoTask> todoTasks = new()
     {
@@ -11,7 +11,7 @@ public class InMemTasksRepo
             Id = Guid.NewGuid(),
             TaskName = "First Task Name",
             Discription = "First Task Discription",
-
+            CurrentState = TaskState.Open
 
         },
         new TodoTask ()
@@ -19,7 +19,7 @@ public class InMemTasksRepo
             Id = Guid.NewGuid(),
             TaskName = "Second Task Name",
             Discription = "Second Task Discription",
-
+            CurrentState = TaskState.Open
 
 
         },
@@ -28,7 +28,7 @@ public class InMemTasksRepo
             Id = Guid.NewGuid(),
             TaskName = "Tird Task Name",
             Discription = "Tird Task Discription",
-
+            CurrentState = TaskState.Open
         }
     };
 
