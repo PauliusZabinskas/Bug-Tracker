@@ -1,5 +1,6 @@
 export default interface Task {
-    taskName: string;
-    discription: string;
-    currentState: string;
+  id: string;
+  taskName: string;
+  discription: string;
+  currentState: 0 | 1 | 2;
   }

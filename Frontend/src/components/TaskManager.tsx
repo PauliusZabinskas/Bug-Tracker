@@ -1,13 +1,7 @@
 import { useState, useEffect } from 'react';
 import './style.css'
 import TaskList from './TaskList';
-
-interface ITask {
-  id: string;
-  taskName: string;
-  discription: string;
-  currentState: 0 | 1 | 2;
-}
+import ITask from './interface/ITask';
 
 const TaskManager = () => {
   const [ITaskName, setITaskName] = useState<string>('');

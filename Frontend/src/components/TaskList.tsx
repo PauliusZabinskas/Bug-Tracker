@@ -1,11 +1,6 @@
 import React from 'react';
+import ITask from './interface/ITask';
 
-interface ITask {
-  id: string;
-  taskName: string;
-  discription: string;
-  currentState: 0 | 1 | 2;
-}
 
 interface TaskListProps {
   tasks: ITask[];
@@ -21,10 +16,10 @@ const TaskList: React.FC<TaskListProps> = ({ tasks, handleUpdate, handleDelete, 
         <h3><p className='font-bold'>Name:</p> {task.taskName}</h3>
         <h3><p className='font-bold'>Discription:</p> {task.discription}</h3>
         <div className='flex flex-wrap mt-2'>
-          <li className='p-2 hover:font-bold hover:text-lg border border-blue-500 border border-yellow-500 rounded-full mx-2'>
+          <li className='p-2 hover:font-bold hover:text-lg border border-blue-500 border border-yellow-500 rounded-full'>
             <button onClick={() => handleUpdate(task)}>Edit</button>
           </li>
-          <li className='p-2 hover:font-bold hover:text-lg border border-yellow-500 rounded-full'>
+          <li className='p-2 hover:font-bold hover:text-lg border border-yellow-500 rounded-full mx-2'>
             <button onClick={() => handleDelete(task.id)}>Delete</button>
           </li>
           <li className='p-2 hover:font-bold hover:text-lg border border-yellow-500 rounded-full'>
