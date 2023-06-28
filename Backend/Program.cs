@@ -3,6 +3,9 @@ using Backend.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddSingleton<ITasksRepo, InMemTasksRepo>();
+
+var connString = builder.Configuration.GetConnectionString("TodoTaskContext");
+
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAllOrigins",
