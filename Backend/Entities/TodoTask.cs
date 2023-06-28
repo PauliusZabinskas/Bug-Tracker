@@ -2,12 +2,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Backend.Entities;
 
-public enum TaskState
-{
-    Open = 1,
-    InProcess = 2,
-    Closed = 3
-}
+
 
 public class TodoTask
 {
