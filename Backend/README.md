@@ -17,4 +17,20 @@ dotnet user-secrets set "ConnectionStrings:TodoTaskContext" "Server=localhost; D
 ```
 # to check user secrest: dotnet user-secrets list
 
+# to add Entity Frame Wor: 
+```powerhell
+dotnet add package Microsoft.EntityFrameworkCore.SqlServer --version 7.0.8
+dotnet tool install --global dotnet-ef
+dotnet add package Microsoft.EntityFrameworkCore.Design
 
+```
+
+# to add initial migration 
+```powershell
+dotnet ef migrations add InitialCreate --output-dir Data\Migrations
+```
+
+# time to Applying a database migration
+```powershell
+dotnet ef database update
+```
