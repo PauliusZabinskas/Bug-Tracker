@@ -32,31 +32,37 @@ public class InMemTasksRepo : ITasksRepo
         }
     };
 
-    public IEnumerable<TodoTask> GetAll()
+    public async Task<IEnumerable<TodoTask>> GetAll()
     {
-        return todoTasks;
+        return await Task.FromResult(todoTasks);
     }
 
-    public TodoTask? Get(Guid id) // ? <= might return null
+    public async Task<TodoTask?> GetAsync(Guid id) // ? <= might return null
     {
-        return todoTasks.Find(task => task.Id == id);
+        return await Task.FromResult(todoTasks.Find(task => task.Id == id));
     }
 
-    public void Create(TodoTask task)
+    public async Task CreateAsync(TodoTask task)
     {
         task.Id = Guid.NewGuid();
         todoTasks.Add(task);
+        
+        await Task.CompletedTask;
     }
 
-    public void Update(TodoTask updatedTask)
+    public async Task UpdateAsync(TodoTask updatedTask)
     {
         var index = todoTasks.FindIndex(tasks => tasks.Id == updatedTask.Id);
         todoTasks[index] = updatedTask;
+
+        await Task.CompletedTask;
     }
 
-    public void Delete(Guid id)
+    public async Task DeleteAsync(Guid id)
     {
         var index = todoTasks.FindIndex(tasks => tasks.Id == id);
         todoTasks.RemoveAt(index);
+
+        await Task.CompletedTask;
     }
 }

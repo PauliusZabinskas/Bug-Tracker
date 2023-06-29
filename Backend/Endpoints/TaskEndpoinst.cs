@@ -7,24 +7,24 @@ namespace Backend.Endpoints;
 public static class TaskEndpoinst
 {
     const string GetTaskEndpointName = "GetTask";
-    
+
     public static RouteGroupBuilder MapTasksEndpoints(this IEndpointRouteBuilder routes)
     {
         var group = routes.MapGroup("/tasks")
         .WithParameterValidation();
 
-        group.MapGet("/", (ITasksRepo repository) => 
-        repository.GetAll().Select(task => task.AsDto()));
+        group.MapGet("/", async (ITasksRepo repository) => 
+        (await repository.GetAll()).Select(task => task.AsDto()));
 
-        group.MapGet("/{id}", (ITasksRepo repository, Guid id) =>
+        group.MapGet("/{id}", async (ITasksRepo repository, Guid id) =>
         {
-            TodoTask? task = repository.Get(id);
+            TodoTask? task = await repository.GetAsync(id);
             return task is not null ? Results.Ok(task.AsDto()) : Results.NotFound();
 
         })
         .WithName(GetTaskEndpointName);
 
-        group.MapPost("/", (ITasksRepo repository, CreateTodoTaskDto taskDto ) =>
+        group.MapPost("/", async (ITasksRepo repository, CreateTodoTaskDto taskDto) =>
         {
             TodoTask task = new()
             {
@@ -33,13 +33,13 @@ public static class TaskEndpoinst
                 CurrentState = taskDto.CurrentState
             };
 
-            repository.Create(task);
+            await repository.CreateAsync(task);
             return Results.CreatedAtRoute(GetTaskEndpointName, new { id = task.Id }, task);
         });
 
-        group.MapPut("/{id}", (ITasksRepo repository, Guid  id, UpdateTodoTaskDto updatedTaskDto) =>
+        group.MapPut("/{id}", async (ITasksRepo repository, Guid id, UpdateTodoTaskDto updatedTaskDto) =>
         {
-            TodoTask? existingTask = repository.Get(id);
+            TodoTask? existingTask = await repository.GetAsync(id);
 
             if (existingTask is null)
             {
@@ -50,18 +50,18 @@ public static class TaskEndpoinst
             existingTask.Discription = updatedTaskDto.Discription;
             existingTask.CurrentState = updatedTaskDto.CurrentState;
 
-            repository.Update(existingTask);
+            await repository.UpdateAsync(existingTask);
 
             return Results.NoContent();
         });
 
-        group.MapDelete("/{id}", (ITasksRepo repository, Guid id) =>
+        group.MapDelete("/{id}", async (ITasksRepo repository, Guid id) =>
         {
-            TodoTask? task = repository.Get(id);
+            TodoTask? task = await repository.GetAsync(id);
 
             if (task is not null)
             {
-                repository.Delete(id);
+                await repository.DeleteAsync(id);
             }
 
             return Results.NoContent();

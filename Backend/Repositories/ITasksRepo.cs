@@ -4,9 +4,9 @@ namespace Backend.Repositories;
 
 public interface ITasksRepo
 {
-    void Create(TodoTask task);
-    void Delete(Guid id);
-    TodoTask? Get(Guid id);
-    IEnumerable<TodoTask> GetAll();
-    void Update(TodoTask updatedTask);
+    Task CreateAsync(TodoTask task);
+    Task DeleteAsync(Guid id);
+    Task<TodoTask?> GetAsync(Guid id);
+    Task<IEnumerable<TodoTask>> GetAll();
+    Task UpdateAsync(TodoTask updatedTask);
 }
