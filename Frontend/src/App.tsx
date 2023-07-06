@@ -6,7 +6,8 @@ import NavigationBar from './components/NavigationBar';
 import './styles.css'
 import Login from './Pages/LoginPage';
 import ForgotPassword from './Pages/ForgotPasswordPage';
-import Register from './Pages/RegisterPage';
+import Register from './Pages/Registerpage';
+import LogoutPage from './Pages/LogoutPage';
 
 const App: React.FC = () => {
   return (
@@ -18,7 +19,7 @@ const App: React.FC = () => {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/resetPassword" element={<ForgotPassword />} />
-        <Route path="/logout" element={<TaskManager />} />
+        <Route path="/logout" element={<LogoutPage />} />
         <Route path="/tasks" element={<TaskManager />} />
       </Routes>
     </Router>

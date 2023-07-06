@@ -10,7 +10,9 @@ public static class EntityExtensions
             task.Id,
             task.TaskName,
             task.Discription,
-            task.CurrentState
+            task.CurrentState,
+            task.CreatedBy
+            // task.Reward
         );
 
     }

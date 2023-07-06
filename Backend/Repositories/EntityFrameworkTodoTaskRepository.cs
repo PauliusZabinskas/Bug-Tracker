@@ -13,7 +13,7 @@ public class EntityFrameworkTodoTaskRepository : ITasksRepo
         this.dbContext = dbContext;
     }
 
-    public async Task<IEnumerable<TodoTask>> GetAll()
+    public async Task<IEnumerable<TodoTask>> GetAllAsync()
     {
         return await dbContext.TodoTasks.AsNoTracking().ToListAsync();
     }
@@ -37,6 +37,11 @@ public class EntityFrameworkTodoTaskRepository : ITasksRepo
     }
     public async Task DeleteAsync(Guid id)
     {
-        await dbContext.TodoTasks.Where(task => task.Id == id).ExecuteDeleteAsync();
+        var todoTask = await dbContext.TodoTasks.FindAsync(id);
+        if (todoTask != null)
+        {
+            dbContext.TodoTasks.Remove(todoTask);
+            await dbContext.SaveChangesAsync();
+        }
     }
 }

@@ -11,7 +11,9 @@ public class InMemTasksRepo : ITasksRepo
             Id = Guid.NewGuid(),
             TaskName = "First Task Name",
             Discription = "First Task Discription",
-            CurrentState = TaskState.Open
+            CurrentState = TaskState.Open,
+            CreatedBy = "Steve"
+            
 
         },
         new TodoTask ()
@@ -19,7 +21,8 @@ public class InMemTasksRepo : ITasksRepo
             Id = Guid.NewGuid(),
             TaskName = "Second Task Name",
             Discription = "Second Task Discription",
-            CurrentState = TaskState.Open
+            CurrentState = TaskState.Open,
+            CreatedBy = "Steve"
 
 
         },
@@ -28,11 +31,12 @@ public class InMemTasksRepo : ITasksRepo
             Id = Guid.NewGuid(),
             TaskName = "Tird Task Name",
             Discription = "Tird Task Discription",
-            CurrentState = TaskState.Open
+            CurrentState = TaskState.Open,
+            CreatedBy = "Steve"
         }
     };
 
-    public async Task<IEnumerable<TodoTask>> GetAll()
+    public async Task<IEnumerable<TodoTask>> GetAllAsync()
     {
         return await Task.FromResult(todoTasks);
     }
@@ -46,7 +50,7 @@ public class InMemTasksRepo : ITasksRepo
     {
         task.Id = Guid.NewGuid();
         todoTasks.Add(task);
-        
+
         await Task.CompletedTask;
     }
 

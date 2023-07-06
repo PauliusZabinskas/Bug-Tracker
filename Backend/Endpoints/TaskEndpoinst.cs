@@ -13,8 +13,8 @@ public static class TaskEndpoinst
         var group = routes.MapGroup("/tasks")
         .WithParameterValidation();
 
-        group.MapGet("/", async (ITasksRepo repository) => 
-        (await repository.GetAll()).Select(task => task.AsDto()));
+        group.MapGet("/", async (ITasksRepo repository) =>
+        (await repository.GetAllAsync()).Select(task => task.AsDto()));
 
         group.MapGet("/{id}", async (ITasksRepo repository, Guid id) =>
         {
@@ -30,7 +30,9 @@ public static class TaskEndpoinst
             {
                 TaskName = taskDto.TaskName,
                 Discription = taskDto.Discription,
-                CurrentState = taskDto.CurrentState
+                CurrentState = taskDto.CurrentState,
+                CreatedBy = taskDto.CreatedBy
+                // Reward = taskDto.Reward
             };
 
             await repository.CreateAsync(task);
@@ -49,6 +51,8 @@ public static class TaskEndpoinst
             existingTask.TaskName = updatedTaskDto.TaskName;
             existingTask.Discription = updatedTaskDto.Discription;
             existingTask.CurrentState = updatedTaskDto.CurrentState;
+            existingTask.CreatedBy = updatedTaskDto.CreatedBy;
+            // existingTask.Reward = updatedTaskDto.Reward;
 
             await repository.UpdateAsync(existingTask);
 
@@ -65,6 +69,22 @@ public static class TaskEndpoinst
             }
 
             return Results.NoContent();
+        });
+
+        // AUTH
+        group.MapPost("/auth/login", async (ITasksRepo repository, CreateTodoTaskDto taskDto) =>
+        {
+            TodoTask task = new()
+            {
+                TaskName = taskDto.TaskName,
+                Discription = taskDto.Discription,
+                CurrentState = taskDto.CurrentState,
+                CreatedBy = taskDto.CreatedBy
+                // Reward = taskDto.Reward
+            };
+
+            await repository.CreateAsync(task);
+            return Results.CreatedAtRoute(GetTaskEndpointName, new { id = task.Id }, task);
         });
         return group;
     }
