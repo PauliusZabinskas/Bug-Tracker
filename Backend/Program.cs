@@ -2,21 +2,25 @@ using Backend.Auth;
 using Backend.Data;
 using Backend.Endpoints;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.DependencyInjection;  // for IServiceScopeFactory
 
 var builder = WebApplication.CreateBuilder(args);
+// Ensure you have defined AddRepositories somewhere in your code
 builder.Services.AddRepositories(builder.Configuration);
 
 // Add Identity services to the services container.
-builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
+builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
+{
+    options.Password.RequireNonAlphanumeric = false;
+    // set other options as needed
+})
     .AddEntityFrameworkStores<TodoTaskContext>()
     .AddDefaultTokenProviders();
 
-// Add Authentication services.
-builder.Services.AddAuthentication(options =>
-    {
-        options.DefaultAuthenticateScheme = IdentityConstants.ApplicationScheme;
-        options.DefaultChallengeScheme = IdentityConstants.ApplicationScheme;
-    });
+// Add Authorization services.
+builder.Services.AddAuthorization();
+builder.Services.AddHttpContextAccessor();
+
 
 builder.Services.AddCors(options =>
 {
@@ -32,12 +36,21 @@ builder.Services.AddCors(options =>
 
 var app = builder.Build();
 
-await app.Services.IitializeDbAsync();
+// Create a new scope to retrieve scoped services
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    var context = services.GetRequiredService<TodoTaskContext>();
+    await context.InitializeDbAsync(); // Ensure you have defined InitializeDbAsync somewhere in your code
+}
 
 app.UseAuthentication(); // Use Authentication
 app.UseAuthorization(); // Use Authorization
 
 app.UseCors("AllowAllOrigins");
+// Ensure you have defined MapTasksEndpoints somewhere in your code
 app.MapTasksEndpoints();
+// Ensure you have defined MapAuthEndpoints somewhere in your code
+app.MapAuthEndpoints();
 
 app.Run();

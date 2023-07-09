@@ -1,12 +1,36 @@
+import axios from 'axios';
 import React, { useState } from 'react';
 
 const ForgotPassword: React.FC = () => {
     const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        // Handle forgot password logic here
+
+        const user = {
+            UserName: username,
+            Email: email,
+        };
+
+        // post the user object to the API
+        try {
+            const response = await axios.post('http://localhost:5047/auth/forgot-password', user);
+            if (response.data) {
+                // handle success here - perhaps show a success message to the user
+            }
+        } catch (error: any) {
+            if (error.response) {
+                console.log(error.response.data);
+                console.log(error.response.status);
+                console.log(error.response.headers);
+            } else if (error.request) {
+                console.log(error.request);
+            } else {
+                console.log('Error', error.message);
+            }
+            console.log(error.config);
+        };
     };
 
     return (

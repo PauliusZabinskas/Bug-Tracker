@@ -17,7 +17,7 @@ const NavigationBar: React.FC = () => {
                             <li className='hover:text-lg hover:font-bold'><Link to="/login">Login</Link></li>
                             <li className='hover:text-lg hover:font-bold'><Link to="/register">Register</Link></li>
                             <li className='hover:text-lg hover:font-bold'><Link to="/logout">Logout</Link></li>
-                            <li className='hover:text-lg hover:font-bold'><Link to="/resetPassword">Reset Password</Link></li>
+                            <li className='hover:text-lg hover:font-bold'><Link to="/changePassword">Chnage Password</Link></li>
                             <li className='hover:text-lg hover:font-bold'><Link to="/tasks">Tasks</Link></li>
                         </ul>
                     )}

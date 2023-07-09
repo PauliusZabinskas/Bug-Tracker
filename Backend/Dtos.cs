@@ -42,3 +42,18 @@ public record LoginDto (
     [Required][StringLength(20)] string UserName,
     [Required] string Password
 );
+
+public record ChangePasswordDto (
+    [Required][DataType(DataType.Password)] string CurrentPassword,
+    [Required][DataType(DataType.Password)] string NewPassword
+);
+
+public record ForgotPasswordRequestDto (
+    [Required] string UserName
+);
+
+public record ResetPasswordDto (
+    [Required][StringLength(20)] string UserName,
+    [Required][DataType(DataType.Password)] string Token,
+    [Required][DataType(DataType.Password)] string NewPassword
+);
