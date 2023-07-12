@@ -267,3 +267,4 @@ C:\CV Projects\Issue - Bug Tracker\Github software projects\Bug Tracker Github u
 C:\CV Projects\Issue - Bug Tracker\Github software projects\Bug Tracker Github upload\Bug-Traker\Backend\obj\Debug\net7.0\Backend.pdb
 C:\CV Projects\Issue - Bug Tracker\Github software projects\Bug Tracker Github upload\Bug-Traker\Backend\obj\Debug\net7.0\Backend.genruntimeconfig.cache
 C:\CV Projects\Issue - Bug Tracker\Github software projects\Bug Tracker Github upload\Bug-Traker\Backend\obj\Debug\net7.0\ref\Backend.dll
+C:\CV Projects\Issue - Bug Tracker\Github software projects\Bug Tracker Github upload\Bug-Traker\Backend\bin\Debug\net7.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll

@@ -26,7 +26,8 @@ const App: React.FC = () => {
             <Route path="/register" element={<Register />} />
             <Route path="/forgotPassword" element={<ForgotPassword />} />
             <Route path="/logout" element={<LogoutPage />} />
-            <Route path="/tasks" element={<PrivateRoute component={TaskManager} />} />
+            <Route path="/tasks" element={<TaskManager />} />
+            {/* <Route path="/tasks" element={<PrivateRoute component={TaskManager} />} /> */}
             <Route path="/changePassword" element={<PrivateRoute component={ChangePassword} />} />
           </Routes>
         </Router>

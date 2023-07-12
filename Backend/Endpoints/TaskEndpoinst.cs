@@ -14,7 +14,7 @@ public static class TaskEndpoinst
         .WithParameterValidation();
 
         group.MapGet("/", async (ITasksRepo repository) =>
-        (await repository.GetAllAsync()).Select(task => task.AsDto()));
+        (await repository.GetAllAsync()).Select(task => task.AsDto())).RequireAuthorization();
 
         group.MapGet("/{id}", async (ITasksRepo repository, Guid id) =>
         {
@@ -22,7 +22,8 @@ public static class TaskEndpoinst
             return task is not null ? Results.Ok(task.AsDto()) : Results.NotFound();
 
         })
-        .WithName(GetTaskEndpointName);
+        .WithName(GetTaskEndpointName)
+        .RequireAuthorization();
 
         group.MapPost("/", async (ITasksRepo repository, CreateTodoTaskDto taskDto) =>
         {
@@ -37,7 +38,7 @@ public static class TaskEndpoinst
 
             await repository.CreateAsync(task);
             return Results.CreatedAtRoute(GetTaskEndpointName, new { id = task.Id }, task);
-        });
+        }).RequireAuthorization();
 
         group.MapPut("/{id}", async (ITasksRepo repository, Guid id, UpdateTodoTaskDto updatedTaskDto) =>
         {
@@ -57,7 +58,7 @@ public static class TaskEndpoinst
             await repository.UpdateAsync(existingTask);
 
             return Results.NoContent();
-        });
+        }).RequireAuthorization();
 
         group.MapDelete("/{id}", async (ITasksRepo repository, Guid id) =>
         {
@@ -69,23 +70,8 @@ public static class TaskEndpoinst
             }
 
             return Results.NoContent();
-        });
-
-        // AUTH
-        group.MapPost("/auth/login", async (ITasksRepo repository, CreateTodoTaskDto taskDto) =>
-        {
-            TodoTask task = new()
-            {
-                TaskName = taskDto.TaskName,
-                Discription = taskDto.Discription,
-                CurrentState = taskDto.CurrentState,
-                CreatedBy = taskDto.CreatedBy
-                // Reward = taskDto.Reward
-            };
-
-            await repository.CreateAsync(task);
-            return Results.CreatedAtRoute(GetTaskEndpointName, new { id = task.Id }, task);
-        });
+        }).RequireAuthorization();
+      
         return group;
     }
 

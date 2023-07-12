@@ -8,6 +8,8 @@ public static class AuthEndpoints
 
     public static void MapAuthEndpoints(this WebApplication app)
     {
+        
+
         app.MapPost("/auth/register", async ([FromBody] RegisterUserDto registerUserDto, [FromServices] UserManager<ApplicationUser> userManager) =>
         {
             var user = new ApplicationUser

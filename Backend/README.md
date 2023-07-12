@@ -42,7 +42,10 @@ dotnet user-secrets set "ConnectionStrings:TodoTaskContext" "Server=localhost; D
 
 ```
 
-
+## to add dotnet Auth pakage:
+```powershell
+dotnet add package Microsoft.AspNetCore.Authentication.JwtBearer
+```
 
 
 
