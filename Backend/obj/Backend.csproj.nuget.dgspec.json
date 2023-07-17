@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\CV Projects\\Issue - Bug Tracker\\Github software projects\\Bug Tracker Github upload\\Bug-Traker\\Backend\\Backend.csproj": {}
+    "C:\\Users\\Paulius\\CV Software projects - full stack projects\\Bug-issue tracker\\Bug-Tracker\\Backend\\Backend.csproj": {}
   },
   "projects": {
-    "C:\\CV Projects\\Issue - Bug Tracker\\Github software projects\\Bug Tracker Github upload\\Bug-Traker\\Backend\\Backend.csproj": {
+    "C:\\Users\\Paulius\\CV Software projects - full stack projects\\Bug-issue tracker\\Bug-Tracker\\Backend\\Backend.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\CV Projects\\Issue - Bug Tracker\\Github software projects\\Bug Tracker Github upload\\Bug-Traker\\Backend\\Backend.csproj",
+        "projectUniqueName": "C:\\Users\\Paulius\\CV Software projects - full stack projects\\Bug-issue tracker\\Bug-Tracker\\Backend\\Backend.csproj",
         "projectName": "Backend",
-        "projectPath": "C:\\CV Projects\\Issue - Bug Tracker\\Github software projects\\Bug Tracker Github upload\\Bug-Traker\\Backend\\Backend.csproj",
-        "packagesPath": "C:\\Users\\zabin\\.nuget\\packages\\",
-        "outputPath": "C:\\CV Projects\\Issue - Bug Tracker\\Github software projects\\Bug Tracker Github upload\\Bug-Traker\\Backend\\obj\\",
+        "projectPath": "C:\\Users\\Paulius\\CV Software projects - full stack projects\\Bug-issue tracker\\Bug-Tracker\\Backend\\Backend.csproj",
+        "packagesPath": "C:\\Users\\Paulius\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Paulius\\CV Software projects - full stack projects\\Bug-issue tracker\\Bug-Tracker\\Backend\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\zabin\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Paulius\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -22,6 +22,7 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\sdk\\7.0.306\\Sdks\\Microsoft.NET.Sdk.Web\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -56,11 +57,11 @@
               "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
               "suppressParent": "All",
               "target": "Package",
-              "version": "[6.0.3, )"
+              "version": "[7.0.9, )"
             },
             "Microsoft.EntityFrameworkCore.SqlServer": {
               "target": "Package",
-              "version": "[6.0.3, )"
+              "version": "[7.0.8, )"
             },
             "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
               "target": "Package",
@@ -90,7 +91,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.203\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.306\\RuntimeIdentifierGraph.json"
         }
       }
     }

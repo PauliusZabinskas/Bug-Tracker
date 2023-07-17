@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "2jNgz0XIw61x/JSjF2DiJXA2tEoPiL7doPn9TolOTpk=",
+  "Source": "BugTracker.Backend",
+  "BasePath": "_content/BugTracker.Backend",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}
