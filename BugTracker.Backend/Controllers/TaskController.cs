@@ -7,9 +7,12 @@ using Microsoft.AspNetCore.Mvc;
 public class TaskController : ControllerBase
 {
     private readonly IRepository<TaskItem> _repository;
+    private readonly IRepository<User> _userRepository;
 
-    public TaskController(IRepository<TaskItem> repository)
+
+    public TaskController(IRepository<TaskItem> repository, IRepository<User> userRepository)
     {
+        _userRepository = userRepository;
         _repository = repository;
     }
 
@@ -18,7 +21,7 @@ public class TaskController : ControllerBase
     public async Task<IActionResult> GetTaskById(int id)
     {
         TaskItem? result = await _repository.Get(id);
-
+        // result is equal to null even with a valid id
         if (result != null)
         {
             return Ok(result);
@@ -29,10 +32,14 @@ public class TaskController : ControllerBase
 
     // POST: localhost:port/task
     [HttpPost]
-    public async Task<IActionResult> CreateTask([FromBody] TaskItem item)
+    public async Task<IActionResult> CreateTask([FromBody] TaskItem item, [FromQuery] Guid user)
     {
+        
+        item.CreatedBy = user;
         TaskItem result = await _repository.Create(item);
-        return CreatedAtAction("GetTaskById", new { id = item.Id });
+
+        // return CreatedAtAction("GetTaskById", new { id = result.Id });// result var must be present
+        return Ok(result);
     }
 
     // PATCH: localhost:port/task
@@ -53,9 +60,10 @@ public class TaskController : ControllerBase
 
     // GET: localhost:port/task
     [HttpGet]
-    public async Task<IActionResult> GetAllTasks()
+    public async Task<IActionResult> GetAllTasks([FromQuery] int? skip, [FromQuery] int? limit)
     {
-        var result = await _repository.GetAll();
+        var result = await _repository.GetAll(skip, limit);
         return Ok(result);
     }
+
 }
