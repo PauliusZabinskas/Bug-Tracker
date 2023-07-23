@@ -7,10 +7,10 @@ using Microsoft.AspNetCore.Mvc;
 public class TaskController : ControllerBase
 {
     private readonly IRepository<TaskItem> _repository;
-    private readonly IRepository<User> _userRepository;
+    private readonly ICurrentUser<User> _userRepository;
 
 
-    public TaskController(IRepository<TaskItem> repository, IRepository<User> userRepository)
+    public TaskController(IRepository<TaskItem> repository, ICurrentUser<User> userRepository)
     {
         _userRepository = userRepository;
         _repository = repository;
@@ -32,14 +32,24 @@ public class TaskController : ControllerBase
 
     // POST: localhost:port/task
     [HttpPost]
-    public async Task<IActionResult> CreateTask([FromBody] TaskItem item, [FromQuery] Guid user)
+    public async Task<IActionResult> CreateTask([FromBody] TaskItem item, [FromQuery] Guid id )
     {
-        
-        item.CreatedBy = user;
+        User currentUser = await _userRepository.GetUser(id);
+
+        if(currentUser != null)
+        {
+            item.CreatedBy = id;
+        // User user = await _userRepository.GetUser(id);
         TaskItem result = await _repository.Create(item);
+        
+        
 
         // return CreatedAtAction("GetTaskById", new { id = result.Id });// result var must be present
         return Ok(result);
+        }
+
+        return NotFound();
+        
     }
 
     // PATCH: localhost:port/task

@@ -1007,26 +1007,24 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Paulius\\.nuget\\packages\\": {}
+    "C:\\Users\\zabin\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Paulius\\CV Software projects - full stack projects\\Bug-issue tracker\\Bug-Tracker\\BugTracker.Backend\\BugTracker.Backend.csproj",
+      "projectUniqueName": "c:\\Users\\zabin\\This Laptop Storage\\Development env\\Cv projects\\Bug-Tracker\\BugTracker.Backend\\BugTracker.Backend.csproj",
       "projectName": "BugTracker.Backend",
-      "projectPath": "C:\\Users\\Paulius\\CV Software projects - full stack projects\\Bug-issue tracker\\Bug-Tracker\\BugTracker.Backend\\BugTracker.Backend.csproj",
-      "packagesPath": "C:\\Users\\Paulius\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Paulius\\CV Software projects - full stack projects\\Bug-issue tracker\\Bug-Tracker\\BugTracker.Backend\\obj\\",
+      "projectPath": "c:\\Users\\zabin\\This Laptop Storage\\Development env\\Cv projects\\Bug-Tracker\\BugTracker.Backend\\BugTracker.Backend.csproj",
+      "packagesPath": "C:\\Users\\zabin\\.nuget\\packages\\",
+      "outputPath": "c:\\Users\\zabin\\This Laptop Storage\\Development env\\Cv projects\\Bug-Tracker\\BugTracker.Backend\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\Paulius\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        "C:\\Users\\zabin\\AppData\\Roaming\\NuGet\\NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net7.0"
       ],
       "sources": {
-        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
         "C:\\Program Files\\dotnet\\sdk\\7.0.306\\Sdks\\Microsoft.NET.Sdk.Web\\library-packs": {},
         "https://api.nuget.org/v3/index.json": {}
       },

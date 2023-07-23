@@ -13,4 +13,9 @@ public class ApplicationDbContext : DbContext
     {
 
     }
+
+    internal Task<Guid> FindAsync(Guid id)
+    {
+        throw new NotImplementedException();
+    }
 }

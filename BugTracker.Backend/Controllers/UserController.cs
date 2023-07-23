@@ -57,8 +57,9 @@ public class UserController : ControllerBase
     public async Task<IActionResult> CreateUser([FromBody] User user)
     {
         User result = await _repository.Create(user);
-        // result.Id = new Guid();
-        return CreatedAtAction("GetByGuid", new { id = result.Id });
+        
+        // return CreatedAtAction("GetByGuid", new { id = result.Id });
+        return Ok(result);    
     }
 
     [HttpPatch]

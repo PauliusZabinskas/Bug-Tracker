@@ -18,6 +18,14 @@ public class EfCoreRepository<T> : IRepository<T> where T : class
         return entity;
     }
 
+    public async Task<T> Create(T entity, Guid id)
+    {
+        
+        await _context.Set<T>().AddAsync(entity);
+        await _context.SaveChangesAsync();
+        return entity;
+    }
+
     public async Task Delete(int id)
     {
         T entity = await _context.Set<T>().FindAsync(id);
@@ -84,12 +92,6 @@ public class EfCoreRepository<T> : IRepository<T> where T : class
         }
     }
 
-    // public async Task<T?> Login()
-    // {
-
-    // }
-
-
-
-
+    
 }
+
