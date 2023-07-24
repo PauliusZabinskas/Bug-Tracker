@@ -3,15 +3,14 @@ using BugTracker.Backend.Services;
 using Microsoft.EntityFrameworkCore;
 namespace BugTracker.Backend.Models;
 
-public class CurrentUser 
+public class CurrentUser : ICurrentUser
 {
-    private readonly ICurrentUser _currentUser;
+    
     string? currentUserId;
 
-    public CurrentUser( ICurrentUser currentUser)
+    public CurrentUser( )
     {
-        _currentUser = currentUser;
-         
+        
     }
 
 
