@@ -3,21 +3,22 @@ using BugTracker.Backend.Services;
 using Microsoft.EntityFrameworkCore;
 namespace BugTracker.Backend.Models;
 
-public class CurrentUser : ICurrentUser 
+public class CurrentUser 
 {
     private readonly ICurrentUser _currentUser;
-    string? currentUser;
+    string? currentUserId;
 
-    public CurrentUser()
+    public CurrentUser( ICurrentUser currentUser)
     {
-     currentUser = "a44fa732-8d0a-4808-b890-5a162242dcb3";
+        _currentUser = currentUser;
+         
     }
 
 
     public string? GetUser()
     {
-        
-        return currentUser;
+        currentUserId = "a44fa732-8d0a-4808-b890-5a162242dcb3";
+        return currentUserId;
     }
 
     
