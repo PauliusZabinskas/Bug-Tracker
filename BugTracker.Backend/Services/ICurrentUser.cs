@@ -2,8 +2,8 @@ using BugTracker.Backend.Models;
 
 namespace BugTracker.Backend.Services;
 
-public interface ICurrentUser<T>
+public interface ICurrentUser
 {
-    Task<T?> GetUser(Guid id);
+    string GetUser();
     // Task<T?> User(int id);
 }

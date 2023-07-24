@@ -3,22 +3,19 @@ using BugTracker.Backend.Services;
 using Microsoft.EntityFrameworkCore;
 namespace BugTracker.Backend.Models;
 
-public class CurrentUser<T> : ICurrentUser<T> where T : class
+public class CurrentUser : ICurrentUser 
 {
-    private readonly ApplicationDbContext _context;
+    private readonly ICurrentUser _currentUser;
+    string? currentUser;
 
-    public CurrentUser(ApplicationDbContext context)
+    public CurrentUser()
     {
-        _context =  context;
+     currentUser = "a44fa732-8d0a-4808-b890-5a162242dcb3";
     }
 
-    
 
-    
-
-    public async Task<T?> GetUser(Guid id)
+    public string? GetUser()
     {
-       T currentUser = await _context.Set<T>().FindAsync(id);
         
         return currentUser;
     }

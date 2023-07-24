@@ -19,7 +19,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 
 // when IRepository is asked - give EfCoreRepository of the same type
 builder.Services.AddTransient(typeof(IRepository<>), typeof(EfCoreRepository<>));
-builder.Services.AddTransient(typeof(ICurrentUser<>), typeof(CurrentUser<>));
+builder.Services.AddTransient(typeof(ICurrentUser), typeof(CurrentUser));
 
 var app = builder.Build();
 
