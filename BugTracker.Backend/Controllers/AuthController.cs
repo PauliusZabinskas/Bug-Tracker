@@ -8,11 +8,9 @@ namespace BugTracker.Backend.Controllers;
     [Route("[controller]")]
     public class AuthController : ControllerBase
     {
-        private readonly IRepository<Auth> _repository;
-
-        public AuthController(IRepository<Auth> repository)
+        public AuthController()
         {
-            _repository = repository;
+            
         }
 
         // [HttpGet]

@@ -1,3 +1,5 @@
+using System.Formats.Asn1;
+using System.Linq.Expressions;
 using BugTracker.Backend.Data;
 using BugTracker.Backend.Services;
 using Microsoft.EntityFrameworkCore;
@@ -13,14 +15,6 @@ public class EfCoreRepository<T> : IRepository<T> where T : class
 
     public async Task<T> Create(T entity)
     {
-        await _context.Set<T>().AddAsync(entity);
-        await _context.SaveChangesAsync();
-        return entity;
-    }
-
-    public async Task<T> Create(T entity, Guid id)
-    {
-        
         await _context.Set<T>().AddAsync(entity);
         await _context.SaveChangesAsync();
         return entity;
@@ -45,13 +39,6 @@ public class EfCoreRepository<T> : IRepository<T> where T : class
 
     public async Task<IEnumerable<T>> GetAll(int? page, int? limit)
     {
-        // IEnumerable<T> entities = await _context.Set<T>().ToListAsync();
-        // IEnumerable<T> entities = await _context.Set<T>()
-        // .AsQueryable()
-        // .Skip(page.Value)
-        // .Take(limit.Value)
-        // .ToListAsync();
-
         IQueryable<T> entities = _context.Set<T>().AsQueryable();
 
         if (page != null)
@@ -92,6 +79,20 @@ public class EfCoreRepository<T> : IRepository<T> where T : class
         }
     }
 
-    
+    public async Task<T?> FindBy(Func<T, bool> selector)
+    {
+        IEnumerable<T> entities = await GetAll(null, null);
+        T? entity = entities.Select(selector).FirstOrDefault() as T;
+        return entity;
+    }
+
+    public async Task<IEnumerable<T?>> FindManyBy(Func<T, bool> selector, int? page, int? limit)
+    {
+        IEnumerable<T?> entities = await GetAll(page, limit);
+        entities = entities.Select(selector) as IEnumerable<T>;
+
+        return entities;
+    }
+
 }
 
