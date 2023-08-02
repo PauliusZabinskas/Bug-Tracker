@@ -1,6 +1,8 @@
 using BugTracker.Backend.Data;
 using BugTracker.Backend.Models;
 using BugTracker.Backend.Services;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -17,7 +19,17 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseInMemoryDatabase("devDb");
 });
 
+builder.Services.AddHttpClient();
+builder.Services.AddIdentityCore<User>(options => {
+    options.Password.RequiredUniqueChars = 0;
+    options.Password.RequireNonAlphanumeric = false;
+    options.Password.RequireDigit = false;
+    options.Password.RequiredLength = 6;
+})
+.AddEntityFrameworkStores<ApplicationDbContext>();
+
 // when IRepository is asked - give EfCoreRepository of the same type
+builder.Services.AddTransient(typeof(IUserManager<User>),typeof(UserManager<User>));
 builder.Services.AddTransient(typeof(IRepository<>), typeof(EfCoreRepository<>));
 builder.Services.AddTransient(typeof(ICurrentUser), typeof(CurrentUser));
 
@@ -32,6 +44,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();

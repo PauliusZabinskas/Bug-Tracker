@@ -1,9 +1,11 @@
 using BugTracker.Backend.Models;
 using BugTracker.Backend.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 [ApiController]
 [Route("[controller]")]
+[Authorize]
 public class TaskController : ControllerBase
 {
     private readonly IRepository<TaskItem> _repository;
