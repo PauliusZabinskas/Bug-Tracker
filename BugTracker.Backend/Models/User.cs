@@ -6,6 +6,6 @@ public class User : IdentityUser
     // define other use properties here
     public User()
     {
-        this.id
+        this.Id
     }
 }

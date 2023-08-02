@@ -29,11 +29,11 @@ public class BugController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> CreateBug([FromBody] BugIssue bug)
     {
-        int? currentUserId = _userService.GetUser();
+        string? currentUserId = _userService.GetUser();
         if (currentUserId != null)
         {
             BugIssue result =  await _repository.Create(bug);
-            result.CreatedBy = currentUserId.Value;
+            result.CreatedBy = currentUserId;
             return CreatedAtAction("GetTaskById", new { result.Id }, result);
         }
         return BadRequest();

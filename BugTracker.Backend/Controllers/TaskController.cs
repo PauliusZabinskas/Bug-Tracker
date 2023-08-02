@@ -36,11 +36,11 @@ public class TaskController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> CreateTask([FromBody] TaskItem item )
     {
-        int? currentUserId = _userService.GetUser();
+        string? currentUserId = _userService.GetUser();
 
         if(currentUserId != null)
         {
-            item.CreatedBy = currentUserId.Value;
+            item.CreatedBy = currentUserId;
         // User user = await _userRepository.GetUser(id);
             TaskItem result = await _repository.Create(item);
 
